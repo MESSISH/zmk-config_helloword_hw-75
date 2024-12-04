@@ -1,8 +1,9 @@
 ".*"
-.history/.*
+.history/
 .history/.gitignore_20241204122325
 .history/.gitignore_20241204164337
 .history/config/boards/arm/hw75_dynamic/app/screen/icons_20241204164253.csv
 .history/config/boards/arm/hw75_dynamic/app/screen/strings_20241204164254.csv
 .history/config/hw75_dynamic_20241204164502.keymap
 .history/config/hw75_dynamic_20241204164550.keymap
+.history/config/hw75_dynamic_20241204164757.keymap
