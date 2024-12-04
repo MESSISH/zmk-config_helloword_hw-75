@@ -105,8 +105,8 @@
 				   <&macro_release &kp LCTRL>;
 		};
 
-		img_backward: music-forward {
-			label = "MUSIC_FORWARD";
+		img_backward: music-backward {
+			label = "MUSIC_BACKWARD";
 			compatible = "zmk,behavior-macro";
 			#binding-cells = <0>;
 			bindings = <&macro_press   &kp LCTRL>,
