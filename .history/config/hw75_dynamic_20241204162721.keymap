@@ -184,7 +184,7 @@
 
 		img {
 			label = "图片";
-			icon = [EF 85 A1];
+			icon = [EF 86 87];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_img>;
 			profile = <&profile_spring>;

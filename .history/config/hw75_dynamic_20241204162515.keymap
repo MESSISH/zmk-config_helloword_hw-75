@@ -160,7 +160,7 @@
 
 		web {
 			label = "前退";
-			icon = [EF 86 B2];
+			icon = [EF 86 87];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_web>;
 			profile = <&profile_spring>;
@@ -168,7 +168,7 @@
 
 		switch {
 			label = "切换";
-			icon = [EF 84 BC];
+			icon = [EF 86 87];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_sheet>;
 			profile = <&profile_spring>;
@@ -176,7 +176,7 @@
 
 		music {
 			label = "音乐";
-			icon = [EF 85 B6];
+			icon = [EF 86 87];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_music>;
 			profile = <&profile_spring>;
@@ -184,7 +184,7 @@
 
 		img {
 			label = "图片";
-			icon = [EF 85 A1];
+			icon = [EF 86 87];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_img>;
 			profile = <&profile_spring>;
