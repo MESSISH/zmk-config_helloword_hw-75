@@ -92,6 +92,31 @@
 				   <&macro_release &kp LCTRL>;
 		};
 
+		img_forward: music-forward {
+			label = "MUSIC_FORWARD";
+			compatible = "zmk,behavior-macro";
+			#binding-cells = <0>;
+			bindings = <&macro_press   &kp LCTRL>,
+				   <&macro_press   &kp LSHFT>,
+				   <&macro_press   &kp LALT>,
+				   <&macro_tap     &kp O>,
+				   <&macro_release &kp LSHFT>,
+				   <&macro_release &kp LALT>,
+				   <&macro_release &kp LCTRL>;
+		};
+
+		img_backward: music-forward {
+			label = "MUSIC_FORWARD";
+			compatible = "zmk,behavior-macro";
+			#binding-cells = <0>;
+			bindings = <&macro_press   &kp LCTRL>,
+				   <&macro_press   &kp LSHFT>,
+				   <&macro_press   &kp LALT>,
+				   <&macro_tap     &kp P>,
+				   <&macro_release &kp LSHFT>,
+				   <&macro_release &kp LALT>,
+				   <&macro_release &kp LCTRL>;
+		};
 	};
 
 	behaviors {
@@ -119,6 +144,12 @@
 			#sensor-binding-cells = <0>;
 			bindings = <&music_forward>, <&music_backward>;
 		};
+		switch_img: switch-img {
+			compatible = "zmk,behavior-sensor-rotate";
+			label = "SWITCH_IMG";
+			#sensor-binding-cells = <0>;
+			bindings = <&img_forward>, <&img_backward>;
+		};
 	};
 
 	keymap {
@@ -132,7 +163,7 @@
 		};
 
 		web {
-			label = "前退";
+			label = "前后";
 			icon = [EF 86 B2];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_web>;
@@ -152,6 +183,14 @@
 			icon = [EF 85 B6];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_music>;
+			profile = <&profile_spring>;
+		};
+
+		img {
+			label = "图片";
+			icon = [EF 85 A1];
+			bindings = <&trans &trans>;
+			sensor-bindings = <&switch_img>;
 			profile = <&profile_spring>;
 		};
 
