@@ -13,6 +13,9 @@ jobs:
     strategy:
       matrix:
         include:
+          - { board: hw75_keyboard@1.1, keymap: hw75_keyboard.keymap  }
+          # - { board: hw75_keyboard@1.2, keymap: hw75_keyboard.keymap  }
+          # - { board: hw75_dynamic@A,    keymap: hw75_dynamic.keymap   }
           - { board: hw75_dynamic@B,    keymap: hw75_dynamic.keymap   }
 
     steps:
@@ -21,7 +24,7 @@ jobs:
           echo "zephyr_version=${ZEPHYR_VERSION}" >> $GITHUB_ENV
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up build tools
         run: |
@@ -29,7 +32,8 @@ jobs:
           apt-get install -y python3-pip protobuf-compiler curl
           curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
           apt-get install -y nodejs
-          pip install -U fonttools
+          apt install -y python3-fonttools
+          apt install -y python3-venv
           npm install -g lv_font_conv
 
       - name: Cache west modules
@@ -53,14 +57,16 @@ jobs:
           west init -l config
           west update
           west zephyr-export
-          pip install -r zephyr/scripts/requirements.txt
-          git config --global --add safe.directory $PWD
+          # python3 -m venv .venv
+          # source .venv/bin/activate
+          # pip install  -r zephyr/scripts/requirements.txt
+          # git config --global --add safe.directory $PWD
 
       - name: West build
         run: |
-          west build -s zmk/app -b hw75_dynamic@B -- \
+          west build -s zmk/app -b ${{ matrix.board }} -- \
             -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
-            -DKEYMAP_FILE=${GITHUB_WORKSPACE}/config/hw75_dynamic.keymap
+            -DKEYMAP_FILE=${GITHUB_WORKSPACE}/config/${{ matrix.keymap }}
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
 
@@ -68,15 +74,15 @@ jobs:
         run: |
           mkdir build/artifacts
           if [ -f build/zephyr/zmk.uf2 ]; then
-            cp build/zephyr/zmk.uf2 "build/artifacts/hw75_dynamic@B-zmk.uf2"
+            cp build/zephyr/zmk.uf2 "build/artifacts/${{ matrix.board }}-zmk.uf2"
           fi
           if [ -f build/zephyr/zmk.hex ]; then
-            cp build/zephyr/zmk.hex "build/artifacts/hw75_dynamic@B-zmk.hex"
+            cp build/zephyr/zmk.hex "build/artifacts/${{ matrix.board }}-zmk.hex"
           fi
-          cp build/zephyr/zmk.bin "build/artifacts/hw75_dynamic@B-zmk.bin"
+          cp build/zephyr/zmk.bin "build/artifacts/${{ matrix.board }}-zmk.bin"
 
       - name: Archive
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: firmware
           path: build/artifacts
@@ -89,10 +95,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: firmware
           path: firmware
@@ -106,7 +112,7 @@ jobs:
           echo "$EOF" >> $GITHUB_OUTPUT
 
       - name: Publish release
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@v4
         with:
           file: firmware/*
           file_glob: true
