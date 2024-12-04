@@ -1,6 +1,1 @@
-.vscode
-.west
-/build
-/modules
-/zephyr
-/zmk
+".*" 
