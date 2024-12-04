@@ -22,7 +22,6 @@ jobs:
       - name: Prepare variables
         run: |
           echo "zephyr_version=${ZEPHYR_VERSION}" >> $GITHUB_ENV
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -34,7 +33,6 @@ jobs:
           apt-get install -y nodejs
           pip install -U fonttools
           npm install -g lv_font_conv
-
       - name: Cache west modules
         uses: actions/cache@v3.0.11
         continue-on-error: true
@@ -50,7 +48,6 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache_name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-
       - name: Prepare west
         run: |
           west init -l config
@@ -58,12 +55,13 @@ jobs:
           west zephyr-export
           pip install -r zephyr/scripts/requirements.txt
           git config --global --add safe.directory $PWD
-
       - name: West build
         run: |
           west build -s zmk/app -b ${{ matrix.board }} -- \
+          west build -s zmk/app -b hw75_dynamic@B -- \
             -DZMK_CONFIG=${GITHUB_WORKSPACE}/config \
             -DKEYMAP_FILE=${GITHUB_WORKSPACE}/config/${{ matrix.keymap }}
+            -DKEYMAP_FILE=${GITHUB_WORKSPACE}/config/hw75_dynamic.keymap
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
 
@@ -72,12 +70,14 @@ jobs:
           mkdir build/artifacts
           if [ -f build/zephyr/zmk.uf2 ]; then
             cp build/zephyr/zmk.uf2 "build/artifacts/${{ matrix.board }}-zmk.uf2"
+            cp build/zephyr/zmk.uf2 "build/artifacts/hw75_dynamic@B-zmk.uf2"
           fi
           if [ -f build/zephyr/zmk.hex ]; then
             cp build/zephyr/zmk.hex "build/artifacts/${{ matrix.board }}-zmk.hex"
+            cp build/zephyr/zmk.hex "build/artifacts/hw75_dynamic@B-zmk.hex"
           fi
           cp build/zephyr/zmk.bin "build/artifacts/${{ matrix.board }}-zmk.bin"
-
+          cp build/zephyr/zmk.bin "build/artifacts/hw75_dynamic@B-zmk.bin"
       - name: Archive
         uses: actions/upload-artifact@v3
         with:
@@ -107,7 +107,6 @@ jobs:
           echo "RELEASE_BODY<<$EOF" >> $GITHUB_OUTPUT
           sed 's/{{TAG}}/${{ github.ref_name }}/g' .github/RELEASE_TEMPLATE.md >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
-
       - name: Publish release
         uses: svenstaro/upload-release-action@v2
         with:
