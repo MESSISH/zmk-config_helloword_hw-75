@@ -91,28 +91,6 @@
 				   <&macro_release &kp LALT>,
 				   <&macro_release &kp LCTRL>;
 		};
-
-        img_forward: img-forward {
-			label = "IMG_FORWARD";
-			compatible = "zmk,behavior-macro";
-			#binding-cells = <0>;
-			bindings = <&macro_press   &kp LCTRL>,
-                    <&macro_press   &kp LALT>,
-				   <&macro_tap     &kp F13>,
-				   <&macro_release &kp LALT>;
-                   <&macro_release &kp LCTRL>;
-		};
-
-		img_backward: img-backward {
-			label = "IMG_BACKWARD";
-			compatible = "zmk,behavior-macro";
-			#binding-cells = <0>;
-			bindings = <&macro_press   &kp LCTRL>,
-                    <&macro_press   &kp LALT>,
-				   <&macro_tap     &kp F14>,
-				   <&macro_release &kp LALT>;
-                   <&macro_release &kp LCTRL>;
-		};
 	};
 
 	behaviors {
@@ -139,12 +117,6 @@
 			label = "SWITCH_MUSIC";
 			#sensor-binding-cells = <0>;
 			bindings = <&music_backward>, <&music_forward>;
-		};
-		switch_img: switch-img {
-			compatible = "zmk,behavior-sensor-rotate";
-			label = "SWITCH_IMG";
-			#sensor-binding-cells = <0>;
-			bindings = <&img_backward>, <&img_forward>;
 		};
 	};
 
@@ -179,14 +151,6 @@
 			icon = [EF 86 87];
 			bindings = <&trans &trans>;
 			sensor-bindings = <&switch_music>;
-			profile = <&profile_spring>;
-		};
-
-		img {
-			label = "图片";
-			icon = [EF 86 87];
-			bindings = <&trans &trans>;
-			sensor-bindings = <&switch_img>;
 			profile = <&profile_spring>;
 		};
 
