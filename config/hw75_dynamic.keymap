@@ -100,7 +100,7 @@
                     		   <&macro_press   &kp LALT>,
 				   <&macro_tap     &kp F13>,
 				   <&macro_release &kp LALT>;
-                   		   <&macro_release &kp LCTRL>;
+				   <&macro_release &kp LCTRL>;
 		};
 
 		img_backward: img-backward {
@@ -111,7 +111,7 @@
 				   <&macro_press   &kp LALT>,
 				   <&macro_tap     &kp F14>,
 				   <&macro_release &kp LALT>;
-                      		   <&macro_release &kp LCTRL>;
+                   <&macro_release &kp LCTRL>;
 		};
 	};
 
